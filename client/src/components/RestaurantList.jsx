@@ -21,15 +21,17 @@ const RestaurantList = (props) => {
 
   const handleDelete = async (e, id) => {
     e.stopPropagation();
-    try {
-      const response = await RestaurantFinder.delete(`/${id}`);
-      setRestaurants(
-        restaurants.filter((restaurant) => {
-          return restaurant.id !== id;
-        })
-      );
-    } catch (err) {
-      console.log(err);
+    if (window.confirm("Do you want to delete a restaurant?")) {
+      try {
+        const response = await RestaurantFinder.delete(`/${id}`);
+        setRestaurants(
+          restaurants.filter((restaurant) => {
+            return restaurant.id !== id;
+          })
+        );
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -56,9 +58,9 @@ const RestaurantList = (props) => {
 
   return (
     <div className="list-group">
-      <table className="table table-hover table-dark">
+      <table className="table table-hover table-light">
         <thead>
-          <tr className="bg-primary">
+          <tr className="bg-warning">
             <th scope="col">Restaurant</th>
             <th scope="col">Location</th>
             <th scope="col">Price Range</th>
@@ -74,6 +76,7 @@ const RestaurantList = (props) => {
                 <tr
                   onClick={() => handleRestaurantSelect(restaurant.id)}
                   key={restaurant.id}
+                  className="border-bottom"
                 >
                   <td>{restaurant.name}</td>
                   <td>{restaurant.location}</td>
@@ -82,7 +85,7 @@ const RestaurantList = (props) => {
                   <td>
                     <button
                       onClick={(e) => handleUpdate(e, restaurant.id)}
-                      className="btn btn-warning"
+                      className="btn btn-primary"
                     >
                       Update
                     </button>
@@ -98,31 +101,6 @@ const RestaurantList = (props) => {
                 </tr>
               );
             })}
-          {/* <tr>
-            <td>mcdonalds</td>
-            <td>New YOrk</td>
-            <td>$$</td>
-            <td>Rating</td>
-            <td>
-              <button className="btn btn-warning">Update</button>
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-
-          <tr>
-            <td>mcdonalds</td>
-            <td>New YOrk</td>
-            <td>$$</td>
-            <td>Rating</td>
-            <td>
-              <button className="btn btn-warning">Update</button>
-            </td>
-            <td>
-              <button className="btn btn-danger">Delete</button>
-            </td>
-          </tr> */}
         </tbody>
       </table>
     </div>

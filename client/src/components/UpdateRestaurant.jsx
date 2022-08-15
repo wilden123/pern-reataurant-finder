@@ -23,6 +23,15 @@ const UpdateRestaurant = (props) => {
     fetchData();
   }, []);
 
+  function checkPriceRange(value) {
+    if (value > 5 || value < 0) {
+      alert("Price range should be over 1 and under 5.");
+      console.log(value);
+    } else {
+      setPriceRange(value);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedRestaurant = await RestaurantFinder.put(`/${id}`, {
@@ -61,7 +70,7 @@ const UpdateRestaurant = (props) => {
           <label htmlFor="price_range">Price Range</label>
           <input
             value={priceRange}
-            onChange={(e) => setPriceRange(e.target.value)}
+            onChange={(e) => checkPriceRange(e.target.value)}
             id="price_range"
             className="form-control"
             type="number"
